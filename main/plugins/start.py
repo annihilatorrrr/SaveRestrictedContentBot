@@ -10,9 +10,9 @@ S = '/' + 's' + 't' + 'a' + 'r' + 't'
 
 @Drone.on(events.callbackquery.CallbackQuery(data="set"))
 async def sett(event):    
-    Drone = event.client                    
+    Drone = event.client
     button = await event.get_message()
-    msg = await button.get_reply_message() 
+    msg = await button.get_reply_message()
     await event.delete()
     async with Drone.conversation(event.chat_id) as conv: 
         xx = await conv.send_message("Send me any image for thumbnail as a `reply` to this message.")
@@ -20,9 +20,9 @@ async def sett(event):
         if not x.media:
             xx.edit("No media found.")
         mime = x.file.mime_type
-        if not 'png' in mime:
-            if not 'jpg' in mime:
-                if not 'jpeg' in mime:
+        if 'png' not in mime:
+            if 'jpg' not in mime:
+                if 'jpeg' not in mime:
                     return await xx.edit("No image found.")
         await xx.delete()
         t = await event.client.send_message(event.chat_id, 'Trying.')

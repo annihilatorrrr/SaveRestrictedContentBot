@@ -28,7 +28,7 @@ batch = []
 
 @Drone.on(events.NewMessage(incoming=True, from_users=AUTH, pattern='/cancel'))
 async def cancel(event):
-    if not event.sender_id in batch:
+    if event.sender_id not in batch:
         return await event.reply("No batch active.")
     batch.clear()
     await event.reply("Done.")
@@ -86,13 +86,10 @@ async def run_batch(userbot, client, sender, link, _range):
             timer = 10
         if i < 100 and i > 50:
             timer = 15
-        if not 't.me/c/' in link:
-            if i < 25:
-                timer = 2
-            else:
-                timer = 3
+        if 't.me/c/' not in link:
+            timer = 2 if i < 25 else 3
         try: 
-            if not sender in batch:
+            if sender not in batch:
                 await client.send_message(sender, "Batch completed.")
                 break
         except Exception as e:
